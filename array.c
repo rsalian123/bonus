@@ -3,6 +3,15 @@
 #include <time.h>
 #include <string.h>
 
+// colors
+#define RED     "\033[1;31m"
+#define GREEN   "\033[1;32m"
+#define YELLOW  "\033[1;33m"
+#define BLUE    "\033[1;34m"
+#define MAGENTA "\033[1;35m"
+#define CYAN    "\033[1;36m"
+#define RESET   "\033[0m"
+
 int main(int argc, char *argv[]) {
     int n = 10;
     int show_time = 0;
@@ -16,19 +25,23 @@ int main(int argc, char *argv[]) {
         } else {
             n = atoi(argv[i]);
             if (n <= 0) {
-                printf("Array size must be a positive integer\n");
+                printf("%sError:%s Array size must be a positive integer\n", RED, RESET);
                 return 1;
             }
         }
     }
     
+    printf("%s Processing array of size %d %s\n", CYAN, n, RESET);
+    
+    
     if (show_time) {
+        printf("%sStarting timer...%s\n", YELLOW, RESET);
         start = clock();
     }
     
     int *arr = malloc(n * sizeof(int));
     if (arr == NULL) {
-        printf("Memory allocation failed\n");
+        printf("%sMemory allocation failed!%s\n", RED, RESET);
         return 1;
     }
     
@@ -40,15 +53,14 @@ int main(int argc, char *argv[]) {
     // gauss addition of sequence of consecutive natural numbers
     int sum = n * (n + 1) / 2;
     
-    printf("Sum of array = %d\n", sum);
+    printf("%sSum of array = %s%d%s\n", GREEN, MAGENTA, sum, RESET);
     
     free(arr);
     
     if (show_time) {
         end = clock();
         cpu_time_used = ((double) (end - start)) / CLOCKS_PER_SEC;
-        printf("Time taken: %f seconds\n", cpu_time_used);
+        printf("%sTime taken: %s%f%s seconds%s\n", YELLOW, BLUE, cpu_time_used, YELLOW, RESET);
     }
-    
     return 0;
 }
